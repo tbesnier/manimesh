@@ -1,2 +1,2 @@
-# manimesh
-Python package to manipulate meshes
+# ManiMesh
+Python package to help manipulate meshes, combining existing modules...
