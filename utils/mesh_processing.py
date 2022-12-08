@@ -7,6 +7,9 @@ import copy
 import trimesh as tri
 import torch
 import sys
+import matplotlib.pyplot as plt
+import imageio
+from matplotlib.collections import PolyCollection
 sys.path.insert(0,"../")
 from utils import lddmm_utils
 
