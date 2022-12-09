@@ -127,3 +127,18 @@ def lossVarifoldSurf(FS, VT, FT, K):
         )
 
     return loss
+
+def normVarifoldSurf(V,F, K):
+    def get_center_length_normal(F, V):
+        V0, V1, V2 = (
+            V.index_select(0, F[:, 0]),
+            V.index_select(0, F[:, 1]),
+            V.index_select(0, F[:, 2]),
+        )
+        centers, normals = (V0 + V1 + V2) / 3, 0.5 * torch.cross(V1 - V0, V2 - V0)
+        length = (normals**2).sum(dim=1)[:, None].sqrt()
+        return centers, length, normals / length
+
+    C, L, Nn = get_center_length_normal(F, V)
+    cst = (L * K(C, C, Nn, Nn, L)).sum()
+    return(cst)
