@@ -15,7 +15,7 @@ from utils import lddmm_utils
 
 def decimate_mesh(V,F,target):    
     """
-    Decimates mesh given by V,F to have number of faces approximatelyu equal to target 
+    Decimates mesh given by V,F to have number of faces approximately equal to target 
     """
     mesh=getMeshFromData([V,F])
     mesh=mesh.simplify_quadric_decimation(target)
