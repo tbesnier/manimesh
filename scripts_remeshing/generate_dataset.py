@@ -118,9 +118,8 @@ to_process = sorted([f for f in os.listdir(orig_dir)
 for in_file in to_process:
 
     # Parse out the name from the FAUST format
-    name_prefix = in_file
-    #print(in_file)
-    num = in_file[0]
+    name_prefix = in_file[:7]
+    num = in_file[8:11]
     # Optionally skip training set
     if test_only and int(num) < 80:
         continue
