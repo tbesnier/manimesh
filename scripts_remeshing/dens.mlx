@@ -9,7 +9,7 @@
   <Param value="true" tooltip="If true the filter will de-select all the vertices." isxmlparam="0" description="De-select all Vertices" type="RichBool" name="allVerts"/>
  </filter>
  <filter name="Conditional Face Selection">
-  <Param value="(fi == {0} || fi == {1} || fi == {2} || fi == {3} || fi == {4})" tooltip="type a boolean function that will be evaluated in order to select a subset of faces&lt;br>" isxmlparam="0" description="boolean function" type="RichString" name="condSelect"/>
+  <Param value="(fi == 0 || fi == 1 || fi == 2 || fi == 3 || fi == 4)" tooltip="type a boolean function that will be evaluated in order to select a subset of faces&lt;br>" isxmlparam="0" description="boolean function" type="RichString" name="condSelect"/>
  </filter>
  <filter name="Dilate Selection"/>
  <filter name="Dilate Selection"/>

@@ -51,6 +51,7 @@ def exec_cmd(cmd_str):
 def mutate_mesh_iso(in_filename, out_filename):
 
     cmd_str = 'meshlabserver -i {} -o {} -s {}/iso.mlx'.format(in_filename, out_filename, scripts_dir)
+    print(cmd_str)
     exec_cmd(cmd_str)
 
 # Runs marching cubes on the mesh, roughly doubling resolution
@@ -139,7 +140,7 @@ for in_file in to_process:
 
         ## Construct the mutated mesh
         mutators[mut](in_filename, out_filename)
-
+        print(mut)
         ## Use nearest neighbors on the original shape to find correspondence
         
         # Read in the mesh we just created
