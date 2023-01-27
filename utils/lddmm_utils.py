@@ -19,7 +19,16 @@ def GaussLinKernel(sigma):
     x, y, u, v, b = Vi(0, 3), Vj(1, 3), Vi(2, 3), Vj(3, 3), Vj(4, 1)
     gamma = 1 / (sigma * sigma)
     D2 = x.sqdist(y)
-    K = (-D2 * gamma).exp() * (u * v).sum() ** 2
+    K = (-D2 * gamma).exp() * (u * v).sum()# ** 2
+    return (K * b).sum_reduction(axis=1)
+
+def GibbsKernel_varifold_oriented(sigma, sigma_n):
+    x, y, u, v, b = Vi(0, 3), Vj(1, 3), Vi(2, 3), Vj(3, 3), Vj(4, 1)
+    gamma = 1 / (sigma * sigma)
+    gamma2 = 1 / (sigma_n * sigma_n)
+    D2 = (y - x)**2
+    n = (u * v)
+    K = (-D2 * gamma).exp() * ((n - 1)*gamma2).exp().sum()
     return (K * b).sum_reduction(axis=1)
 
 ##################################################################
