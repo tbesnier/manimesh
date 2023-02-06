@@ -15,11 +15,18 @@ def GaussKernel(sigma):
 ###################################################################
 # Define "Gaussian-CauchyBinet" kernel :math:`(K(x,y,u,v)b)_i = \sum_j \exp(-\gamma\|x_i-y_j\|^2) \langle u_i,v_j\rangle^2 b_j`
 
-def GaussLinKernel(sigma):
+def GaussLinKernel_current(sigma):
     x, y, u, v, b = Vi(0, 3), Vj(1, 3), Vi(2, 3), Vj(3, 3), Vj(4, 1)
     gamma = 1 / (sigma * sigma)
     D2 = x.sqdist(y)
     K = (-D2 * gamma).exp() * (u * v).sum()# ** 2
+    return (K * b).sum_reduction(axis=1)
+
+def GaussSquaredKernel_varifold_unoriented(sigma):
+    x, y, u, v, b = Vi(0, 3), Vj(1, 3), Vi(2, 3), Vj(3, 3), Vj(4, 1)
+    gamma = 1 / (sigma * sigma)
+    D2 = x.sqdist(y)
+    K = (-D2 * gamma).exp() * ((u * v)**2).sum()
     return (K * b).sum_reduction(axis=1)
 
 def GibbsKernel_varifold_oriented(sigma, sigma_n):
