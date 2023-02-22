@@ -5,15 +5,17 @@ ids = ['FaceTalk_170725_00137_TA', 'FaceTalk_170728_03272_TA', 'FaceTalk_170731_
        'FaceTalk_170811_03274_TA', 'FaceTalk_170811_03275_TA', 'FaceTalk_170904_00128_TA', 'FaceTalk_170904_03276_TA',
        'FaceTalk_170908_03277_TA', 'FaceTalk_170912_03278_TA', 'FaceTalk_170913_03279_TA', 'FaceTalk_170915_00223_TA']
 
-ids = ['FaceTalk_170725_00137_TA']
+ids = ['FaceTalk_170728_03272_TA']
 
 exprs = ['bareteeth', 'cheeks_in', 'eyebrow', 'high_smile', 'lips_back', 'lips_up',
          'mouth_down', 'mouth_extreme', 'mouth_middle', 'mouth_open', 'mouth_side', 'mouth_up']
 
+exprs = ['bareteeth', 'cheeks_in', 'high_smile', 'mouth_extreme']
+
 protocols = ['cloud.mlx', 'dens.mlx', 'iso.mlx', 'mc.mlx', 'qes.mlx']
 
-base_path = "../../datasets/COMA"
-output_path = "../../datasets/COMA_remeshed"
+base_path = "../../datasets/COMA_3"
+output_path = "../../datasets/COMA_3_remeshed"
 
 if not os.path.exists(output_path):
     os.mkdir(output_path)

@@ -22,6 +22,13 @@ def GaussLinKernel_current(sigma):
     K = (-D2 * gamma).exp() * (u * v).sum()# ** 2
     return (K * b).sum_reduction(axis=1)
 
+def GaussLinKernel_varifold_unoriented(sigma):
+    x, y, u, v, b = Vi(0, 3), Vj(1, 3), Vi(2, 3), Vj(3, 3), Vj(4, 1)
+    gamma = 1 / (sigma * sigma)
+    D2 = x.sqdist(y)
+    K = (-D2 * gamma).exp() * ((u * v).abs()).sum()
+    return (K * b).sum_reduction(axis=1)
+
 def GaussSquaredKernel_varifold_unoriented(sigma):
     x, y, u, v, b = Vi(0, 3), Vj(1, 3), Vi(2, 3), Vj(3, 3), Vj(4, 1)
     gamma = 1 / (sigma * sigma)
