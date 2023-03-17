@@ -1,0 +1,7 @@
+<!DOCTYPE FilterScript>
+<FilterScript>
+ <filter name="Conditional Face Selection">
+  <Param description="boolean function" value="((2*x1^2 + y1^2 + z1^2) > 0.013)" name="condSelect" type="RichString" tooltip="type a boolean function that will be evaluated in order to select a subset of faces&lt;br>"/>
+ </filter>
+ <filter name="Delete Selected Faces and Vertices"/>
+</FilterScript>
