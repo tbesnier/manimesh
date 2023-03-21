@@ -10,11 +10,10 @@ ids = ['FaceTalk_170725_00137_TA', 'FaceTalk_170728_03272_TA', 'FaceTalk_170731_
 ids = ['FaceTalk_170725_00137_TA']
 
 exprs = ['bareteeth', 'cheeks_in', 'eyebrow', 'high_smile', 'lips_back', 'lips_up',
-         'mouth_down', 'mouth_extreme', 'mouth_middle', 'mouth_open', 'mouth_side', 'mouth_up']
+         'mouth_down', 'mouth_open', 'mouth_up']
 
 #exprs = ['bareteeth']
 
-protocols = ['cloud.mlx', 'dens.mlx', 'iso.mlx', 'mc.mlx', 'qes.mlx']
 
 ref_path = "../../datasets/COMA"
 base_path = "../../datasets/COMA_scans"
@@ -66,7 +65,7 @@ for id in ids:
                 # create a new MeshSet
                 ms = pymeshlab.MeshSet()
                 ms.load_new_mesh(inter_path + "/" + id + "/" + expr + "/" + str(expr) + f'.{i:06}'+".ply")
-                ms.load_filter_script('simplification.mlx')
+                ms.load_filter_script('preprocess_scans.mlx')
                 ms.apply_filter_script()
 
                 if not os.path.exists(output_path + "/" + id):
