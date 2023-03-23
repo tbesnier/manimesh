@@ -10,7 +10,7 @@ ids = ['FaceTalk_170725_00137_TA', 'FaceTalk_170728_03272_TA', 'FaceTalk_170731_
 ids = ['FaceTalk_170725_00137_TA']
 
 exprs = ['bareteeth', 'cheeks_in', 'eyebrow', 'high_smile', 'lips_back', 'lips_up',
-         'mouth_down', 'mouth_open', 'mouth_up']
+        'mouth_down', 'mouth_open', 'mouth_side', 'mouth_up']
 
 #exprs = ['bareteeth']
 
@@ -54,18 +54,21 @@ for id in ids:
                 V,F = trimesh.load(path).vertices, trimesh.load(path).faces
                 V_ref = trimesh.load(ref_path + "/" + id + "/" + expr + "/" + str(expr) + f'.{i:06}' + ".ply").vertices
 
-                V_new = (V - np.mean(V, axis=0))/((np.max(V) - np.min(V)) / (np.max(V_ref) - np.min(V_ref)))
+                V = (V - np.mean(V, axis=0))/((np.max(V) - np.min(V)) / (np.max(V_ref) - np.min(V_ref)))
+                trans = np.stack((np.zeros(V.shape[0]), -0.03 * np.ones(V.shape[0]),
+                                  -0.03 * np.ones(V.shape[0]))).T
+                V = (V + trans)*1.1
 
                 if not os.path.exists(inter_path + "/" + id):
                     os.mkdir(inter_path + "/" + id)
                 if not os.path.exists(inter_path + "/" + id + "/" + expr):
                     os.mkdir(inter_path + "/" + id + "/" + expr)
-                export_mesh(V_new, F, inter_path + "/" + id + "/" + expr + "/" + str(expr) + f'.{i:06}' + ".ply")
+                export_mesh(V, F, inter_path + "/" + id + "/" + expr + "/" + str(expr) + f'.{i:06}' + ".ply")
 
                 # create a new MeshSet
                 ms = pymeshlab.MeshSet()
                 ms.load_new_mesh(inter_path + "/" + id + "/" + expr + "/" + str(expr) + f'.{i:06}'+".ply")
-                ms.load_filter_script('preprocess_scans.mlx')
+                ms.load_filter_script('preprocessing_scans.mlx')
                 ms.apply_filter_script()
 
                 if not os.path.exists(output_path + "/" + id):
@@ -74,5 +77,8 @@ for id in ids:
                     os.mkdir(output_path + "/" + id + "/" + expr)
 
                 ms.save_current_mesh(output_path + "/" + id + "/" + expr + "/" + str(expr) + f'.{i:06}'+".ply")
+
+
+
             i += 1
 
