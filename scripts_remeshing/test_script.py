@@ -5,16 +5,16 @@ ids = ['FaceTalk_170725_00137_TA', 'FaceTalk_170728_03272_TA', 'FaceTalk_170731_
        'FaceTalk_170811_03274_TA', 'FaceTalk_170811_03275_TA', 'FaceTalk_170904_00128_TA', 'FaceTalk_170904_03276_TA',
        'FaceTalk_170908_03277_TA', 'FaceTalk_170912_03278_TA', 'FaceTalk_170913_03279_TA', 'FaceTalk_170915_00223_TA']
 
-ids = ['FaceTalk_170728_03272_TA']
+#ids = ['FaceTalk_170728_03272_TA']
 
 exprs = ['bareteeth', 'cheeks_in', 'eyebrow', 'high_smile', 'lips_back', 'lips_up',
          'mouth_down', 'mouth_extreme', 'mouth_middle', 'mouth_open', 'mouth_side', 'mouth_up']
 
-exprs = ['bareteeth', 'high_smile', 'mouth_extreme']
+#exprs = ['bareteeth', 'high_smile', 'mouth_extreme']
 
 
-base_path = "../../datasets/COMA_3"
-output_path = "../../datasets/COMA_remeshed_Variable"
+base_path = "../../datasets/COMA"
+output_path = "../../datasets/COMA_croped"
 
 if not os.path.exists(output_path):
     os.mkdir(output_path)
@@ -28,7 +28,7 @@ for id in ids:
                 # create a new MeshSet
                 ms = pymeshlab.MeshSet()
                 ms.load_new_mesh(base_path + "/" + id + "/" + expr + "/" + str(expr) + f'.{i:06}'+".ply")
-                ms.load_filter_script('variable.mlx')
+                ms.load_filter_script('crop_face.mlx')
                 ms.apply_filter_script()
 
                 if not os.path.exists(output_path + "/" + id):

@@ -7,11 +7,10 @@ ids = ['FaceTalk_170725_00137_TA', 'FaceTalk_170728_03272_TA', 'FaceTalk_170731_
        'FaceTalk_170811_03274_TA', 'FaceTalk_170811_03275_TA', 'FaceTalk_170904_00128_TA', 'FaceTalk_170904_03276_TA',
        'FaceTalk_170908_03277_TA', 'FaceTalk_170912_03278_TA', 'FaceTalk_170913_03279_TA', 'FaceTalk_170915_00223_TA']
 
-ids = ['FaceTalk_170725_00137_TA']
+ids = ['FaceTalk_170915_00223_TA']
 
 exprs = ['bareteeth', 'cheeks_in', 'eyebrow', 'high_smile', 'lips_back', 'lips_up',
-        'mouth_down', 'mouth_open', 'mouth_side', 'mouth_up']
-
+         'mouth_down', 'mouth_extreme', 'mouth_middle', 'mouth_open', 'mouth_side', 'mouth_up']
 #exprs = ['bareteeth']
 
 
@@ -52,31 +51,32 @@ for id in ids:
             if not os.path.exists(output_path + "/" + id + "/" + expr + "/" + str(expr) + f'.{i:06}'+".ply"):
                 path = base_path + "/" + id + "/" + expr + "/" + str(expr) + f'.{i:06}' + ".obj"
                 V,F = trimesh.load(path).vertices, trimesh.load(path).faces
-                V_ref = trimesh.load(ref_path + "/" + id + "/" + expr + "/" + str(expr) + f'.{i:06}' + ".ply").vertices
+                if os.path.exists(ref_path + "/" + id + "/" + expr + "/" + str(expr) + f'.{i:06}' + ".ply"):
+                    V_ref = trimesh.load(ref_path + "/" + id + "/" + expr + "/" + str(expr) + f'.{i:06}' + ".ply").vertices
 
-                V = (V - np.mean(V, axis=0))/((np.max(V) - np.min(V)) / (np.max(V_ref) - np.min(V_ref)))
-                trans = np.stack((np.zeros(V.shape[0]), -0.03 * np.ones(V.shape[0]),
-                                  -0.03 * np.ones(V.shape[0]))).T
-                V = (V + trans)*1.1
+                    V = (V - np.mean(V, axis=0))/((np.max(V) - np.min(V)) / (np.max(V_ref) - np.min(V_ref)))
+                    trans = np.stack((np.zeros(V.shape[0]), -0.03 * np.ones(V.shape[0]),
+                                      -0.03 * np.ones(V.shape[0]))).T
+                    V = (V + trans)*1.1
 
-                if not os.path.exists(inter_path + "/" + id):
-                    os.mkdir(inter_path + "/" + id)
-                if not os.path.exists(inter_path + "/" + id + "/" + expr):
-                    os.mkdir(inter_path + "/" + id + "/" + expr)
-                export_mesh(V, F, inter_path + "/" + id + "/" + expr + "/" + str(expr) + f'.{i:06}' + ".ply")
+                    if not os.path.exists(inter_path + "/" + id):
+                        os.mkdir(inter_path + "/" + id)
+                    if not os.path.exists(inter_path + "/" + id + "/" + expr):
+                        os.mkdir(inter_path + "/" + id + "/" + expr)
+                    export_mesh(V, F, inter_path + "/" + id + "/" + expr + "/" + str(expr) + f'.{i:06}' + ".ply")
 
-                # create a new MeshSet
-                ms = pymeshlab.MeshSet()
-                ms.load_new_mesh(inter_path + "/" + id + "/" + expr + "/" + str(expr) + f'.{i:06}'+".ply")
-                ms.load_filter_script('preprocessing_scans.mlx')
-                ms.apply_filter_script()
+                    # create a new MeshSet
+                    ms = pymeshlab.MeshSet()
+                    ms.load_new_mesh(inter_path + "/" + id + "/" + expr + "/" + str(expr) + f'.{i:06}'+".ply")
+                    ms.load_filter_script('preprocessing_scans.mlx')
+                    ms.apply_filter_script()
 
-                if not os.path.exists(output_path + "/" + id):
-                    os.mkdir(output_path + "/" + id)
-                if not os.path.exists(output_path + "/" + id + "/" + expr):
-                    os.mkdir(output_path + "/" + id + "/" + expr)
+                    if not os.path.exists(output_path + "/" + id):
+                        os.mkdir(output_path + "/" + id)
+                    if not os.path.exists(output_path + "/" + id + "/" + expr):
+                        os.mkdir(output_path + "/" + id + "/" + expr)
 
-                ms.save_current_mesh(output_path + "/" + id + "/" + expr + "/" + str(expr) + f'.{i:06}'+".ply")
+                    ms.save_current_mesh(output_path + "/" + id + "/" + expr + "/" + str(expr) + f'.{i:06}'+".ply")
 
 
 
